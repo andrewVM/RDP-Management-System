@@ -1,0 +1,58 @@
+CREATE TABLE project (
+    project_id VARCHAR(100) UNIQUE NOT NULL PRIMARY KEY,
+    p_name VARCHAR (255) NOT NULL,
+    p_description TEXT,
+    p_goals TEXT,
+    p_target TEXT,
+    p_region VARCHAR (100) NOT NULL,
+    p_district VARCHAR (100) NOT NULL,
+    p_ward VARCHAR (100),
+    p_donor VARCHAR (200),
+    p_starting_date DATE NOT NULL,
+    p_ending_date DATE,
+    p_duration VARCHAR(100),
+    p_status VARCHAR (100),
+    p_remarks TEXT,
+    p_category VARCHAR (100),
+    organization_id VARCHAR(100) NOT NULL,
+    FOREIGN KEY (organization_id) REFERENCES organization (organization_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE project_activity (
+    activity_id SERIAL NOT NULL PRIMARY KEY,
+    activity_name VARCHAR (255) NOT NULL,
+    activity_goal TEXT,
+    activity_region VARCHAR (100) NOT NULL,
+    activity_district VARCHAR (100) NOT NULL,
+    activity_ward VARCHAR (100),
+    implementation_stage TEXT,
+    activity_starting_date DATE NOT NULL,
+    activity_ending_date DATE,
+    activity_duration VARCHAR(100) ,
+    activity_remarks TEXT,
+    project_id VARCHAR(100) NOT NULL,
+    FOREIGN KEY (project_id) REFERENCES project (project_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE organization (
+    organization_id VARCHAR (100) UNIQUE NOT NULL PRIMARY KEY,
+    organization_name VARCHAR (200) UNIQUE NOT NULL,
+    organization_descript TEXT,
+    organization_mission TEXT,
+    organization_vission TEXT,
+    area_of_operation VARCHAR (200),
+    organization_phoneNumbber VARCHAR (100) UNIQUE,
+    organization_email VARCHAR (100) UNIQUE,
+    organization_website VARCHAR (100) UNIQUE
+);
+
+CREATE TABLE users (
+    username VARCHAR (100) UNIQUE NOT NULL PRIMARY KEY,
+    first_name VARCHAR (100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    user_email VARCHAR (100) UNIQUE,
+    password VARCHAR (200),
+    user_privileges VARCHAR (90),
+    organization_id VARCHAR(100),
+    FOREIGN KEY (organization_id) REFERENCES organization (organization_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
